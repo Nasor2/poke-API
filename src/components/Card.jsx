@@ -12,11 +12,11 @@ const Card = ({ pokemon, index }) => {
                         const response = await fetch(`https://pokeapi.co/api/v2/ability/${ability.ability.name}`);
                         const data = await response.json();
                         let description = data.effect_entries.find(entry => entry.language.name === 'en')?.short_effect;
-                        
+
                         if (!description) {
                             description = data.flavor_text_entries.find(entry => entry.language.name === 'en')?.flavor_text || 'Description no available';
                         }
-                        
+
                         descriptions[ability.ability.name] = description;
                     } catch (error) {
                         console.error(`Error fetching description for ${ability.ability.name}:`, error);
@@ -66,13 +66,13 @@ const Card = ({ pokemon, index }) => {
     }
 
     return (
-        <div className={`max-w-sm mx-auto rounded-lg shadow-2xl transform transition-all hover:scale-105 border-8 border-gray-400 ${cardColorClass} border-opacity-70`}>
+        <div className={`max-w-xs mx-auto rounded-lg shadow-lg border-4 border-gray-400 ${cardColorClass} border-opacity-70`}>
             <div className=" h-full p-4 bg-white bg-opacity-65 rounded-lg backdrop-filter backdrop-blur-lg">
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="pixelated text-xl font-bold text-gray-900">{capitalizeFirstLetter(pokemon.name)}</h2>
-                    <h2 className="pixelated text-5x font-bold text-gray-900">Power {pokemon.stats[0].base_stat}</h2>
+                    <h2 className="pixelated text-lg font-bold text-gray-900">Power {pokemon.stats[0].base_stat}</h2>
                 </div>
-                <img className="w-full object-cover rounded-lg mb-4 border-4 border-gray-400 backdrop-blur-lg " src={imageUrl} alt={pokemon.name} />
+                <img className="w-full object-cover rounded-lg mb-4 border-4 border-gray-400 backdrop-blur-lg" src={imageUrl} alt={pokemon.name} />
                 <div className="flex justify-center mb-4">
                     {pokemon.types.map((type, index) => (
                         <span key={index} className={`pixelated px-2 py-1 mx-1 rounded-full text-sm font-medium text-white ${getColorClassByType(type.type.name)}`}>

@@ -10,7 +10,7 @@ const CardList = ({ selectedFilters, searchTerm }) => {
             try {
                 let allPokemons = [];
                 let nextUrl = `https://pokeapi.co/api/v2/pokemon?limit=10000`;
-                const limit = 2000;
+                const limit = 20;
 
                 while (nextUrl && allPokemons.length < limit) {
                     const response = await fetch(nextUrl);
@@ -18,12 +18,12 @@ const CardList = ({ selectedFilters, searchTerm }) => {
                     const fetches = data.results.map(pokemon => fetch(pokemon.url).then(res => res.json()));
                     const results = await Promise.all(fetches);
 
-                    allPokemons = [...allPokemons, ...results].slice(0, limit);//Limita la cantidad de pokemos
+                    allPokemons = [...allPokemons, ...results].slice(0, limit); // Limita la cantidad de pokémon
 
                     nextUrl = data.next;
                 }
 
-                //filtra los pokemon que tienen una imagen no nula
+                // Filtra los pokémon que tienen una imagen no nula
                 const validPokemons = allPokemons.filter(pokemon =>
                     pokemon.sprites.other['official-artwork'].front_default ||
                     pokemon.sprites.front_default ||
@@ -47,14 +47,13 @@ const CardList = ({ selectedFilters, searchTerm }) => {
         return matchesFilters && matchesSearchTerm;
     });
 
-
     if (loading) {
         return <div className="text-center">Cargando...</div>;
     }
 
     return (
-        <div className="self-center">
-            <div className="grid grid-cols-3 gap-8">
+        <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {filteredPokemons.map((pokemon, index) => (
                     <Card key={index} pokemon={pokemon} index={index} />
                 ))}
