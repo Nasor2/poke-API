@@ -10,7 +10,7 @@ const CardList = ({ selectedFilters, searchTerm }) => {
             try {
                 let allPokemons = [];
                 let nextUrl = `https://pokeapi.co/api/v2/pokemon?limit=10000`;
-                const limit = 20;
+                const limit = 2000;
 
                 while (nextUrl && allPokemons.length < limit) {
                     const response = await fetch(nextUrl);
